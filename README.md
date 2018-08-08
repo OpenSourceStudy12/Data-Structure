@@ -51,7 +51,8 @@
   - 2 链式存储结构  
     - 2.1 孩子兄弟表示法  
 - 二叉树遍历  
-- ![微信图片_20180808175840](C:/Users/ronghuiliao/Pictures/树/微信图片_20180808175840.jpg)
+- ![image1](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/image1.jpg)
+
   - 先序遍历：根--左--右  
   - 中序遍历：左--根--右  
   - 后序遍历：左--右--根
