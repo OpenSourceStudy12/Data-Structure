@@ -46,6 +46,7 @@
 - 二叉树的存储结构  
   - 1 顺序存储结构：用连续的空间存储结点 
     - 1.1 双亲表示法  
+  ![双亲存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/双亲存储结构.pnp)
     - 1.2 孩子表示法  
     - 1.3 双亲孩子表示法  
   - 2 链式存储结构  
