@@ -18,7 +18,15 @@
 	- 深度：树的最大层次称为深度
 	- 有序树：树中节点是有顺序的，不能互换
 	- 无序树
-
+- 存储结构  
+	- 1 顺序存储结构
+		- 双亲表示法
+![双亲存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/双亲存储结构.png)
+	- 2 链式存储结构  
+		- 孩子链表表示法
+![双亲存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/孩子链表存储结构.png)
+		- 孩子兄弟链表表示法
+![双亲存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/孩子--兄弟链表存储结构.png)
 - 树的基本操作  
 	- InitTree(&T);//构造空树  
 	- DestroyTree(&T);//销毁树T  
@@ -42,15 +50,14 @@
 - 性质：  
   1. 在二叉树的第 i 层上至多有 (2^(i-1)) 个节点(i >= 1)
   2. 深度为 k 的二叉树 至多有 (2^k-1) 个节点(k>=1)
-  3. 任意二叉树，其度为零的节点数为n0,度为2的节点为n2,则n0 = n2 + 1。
+  3. 任意二叉树，其度为零的节点数为n0,度为2的节点为n2,则n0 = n2 + 1。  
+    
 - 二叉树的存储结构  
-  - 1 顺序存储结构：用连续的空间存储结点 
-    - 1.1 双亲表示法  
-  ![双亲存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/双亲存储结构.pnp)
-    - 1.2 孩子表示法  
-    - 1.3 双亲孩子表示法  
+  - 1 顺序存储结构
   - 2 链式存储结构  
-    - 2.1 孩子兄弟表示法  
+  	- 二叉链表
+  	- 三叉链表
+  	- 线索链表
 - 二叉树遍历  
 - ![image1](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/image1.jpg)
 
