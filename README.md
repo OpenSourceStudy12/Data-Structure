@@ -61,12 +61,12 @@
 ![二叉树的顺序存储](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉树的顺序存储.png)   
   - 2 链式存储结构  
   	- 二叉链表  
-![二叉树链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉树链表表示.png)  
-![二叉树链表存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉树链表存储结构.png)
+![二叉链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉链表表示.png)  
+![二叉链表存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉链表存储结构.png)
   	- 三叉链表  
   	在二叉链表节点中增加一个指向双亲的指针，就构成三叉链表  
-![三叉树链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/三叉树链表表示.png)  
-![三叉树链表存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/三叉树链表存储结构.png)
+![三叉链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/三叉链表表示.png)  
+![三叉链表存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/三叉链表存储结构.png)
   	- 线索链表  
 	
 - 二叉树遍历  
