@@ -53,11 +53,22 @@
   3. 任意二叉树，其度为零的节点数为n0,度为2的节点为n2,则n0 = n2 + 1。  
     
 - 二叉树的存储结构  
-  - 1 顺序存储结构
+  - 1 顺序存储结构  
+![完全二叉树](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/完全二叉树.png)  
+![完全二叉树存储](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/完全二叉树存储.png)  
+	 顺序存储适合于完全二叉树  
+![二叉树1](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉树1.png)   
+![二叉树的顺序存储](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉树的顺序存储.png)   
   - 2 链式存储结构  
-  	- 二叉链表
-  	- 三叉链表
-  	- 线索链表
+  	- 二叉链表  
+![二叉树链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉树链表表示.png)  
+![二叉树链表存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉树链表存储结构.png)
+  	- 三叉链表  
+  	在二叉链表节点中增加一个指向双亲的指针，就构成三叉链表  
+![三叉树链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/三叉树链表表示.png)  
+![三叉树链表存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/三叉树链表存储结构.png)
+  	- 线索链表  
+	
 - 二叉树遍历  
 - ![image1](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/image1.jpg)
 
