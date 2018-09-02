@@ -61,6 +61,7 @@
 ![二叉树的顺序存储](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉树的顺序存储.png)   
   - 2 链式存储结构  
   	- 二叉链表  
+  		性质：有n个节点的二叉链表中必定存在n+1个空链域  
 ![二叉链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉链表表示.png)  
 ![二叉链表存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/二叉链表存储结构.png)
   	- 三叉链表  
@@ -68,11 +69,12 @@
 ![三叉链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/三叉链表表示.png)  
 ![三叉链表存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/三叉链表存储结构.png)
   	- 线索链表  
+![线索链表存储](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/线索链表存储.png) 	
 	
 - 二叉树遍历  
 - ![image1](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/image1.jpg)
 
-  - 先序遍历：根--左--右  
+  - 先序遍历：根--左--右    
   - 中序遍历：左--根--右  
   - 后序遍历：左--右--根
 
