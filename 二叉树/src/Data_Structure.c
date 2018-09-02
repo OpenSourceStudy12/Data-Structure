@@ -10,7 +10,7 @@
 int main()
 {
 	BTree *root = NULL,*node = NULL;
-	char data = '/';
+	Type data = '/';
 	printf("input BTree data char\n");
 
 	root = createBinTree(root);//创建二叉树

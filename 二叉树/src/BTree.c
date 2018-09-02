@@ -25,7 +25,7 @@ BTree *createBinTree(BTree *root)
 *返回值：找到返回左孩子的地址，未找到返回NULL;
 *其他说明：无
 */
-BTree *getLchild(BTree *root, char data) //获得一个节点的左孩子
+BTree *getLchild(BTree *root, Type data) //获得一个节点的左孩子
 {
 	BTree *p_lchild = NULL, *p_rchild = NULL;
 	if (!root)
@@ -50,7 +50,7 @@ BTree *getLchild(BTree *root, char data) //获得一个节点的左孩子
 	}
 }
 
-BTree *getRchild(BTree *root, char data)
+BTree *getRchild(BTree *root, Type data)
 {
 	BTree *p_lchild = NULL, *p_rchild = NULL;
 	if (!root)
@@ -72,10 +72,9 @@ BTree *getRchild(BTree *root, char data)
 	}
 }
 
-void display(BTree *node)
+void display(Type data)
 {
-	if(node)
-		printf("%c",node->data);
+	printf("%c",data);
 }
 
 //先序遍历
@@ -83,7 +82,7 @@ void Preorder(BTree *root,VIST vist)
 {
 	if(!root)
 		return;
-	vist(root);
+	vist(root->data);
 	Preorder(root->lchild,vist);
 	Preorder(root->rchild,vist);
 }
@@ -94,7 +93,7 @@ void Inorder(BTree *root,VIST vist)
 	if(!root)
 		return;
 	Inorder(root->lchild,vist);
-	vist(root);
+	vist(root->data);
 	Inorder(root->rchild,vist);
 }
 
@@ -105,6 +104,12 @@ void Postorder(BTree *root,VIST vist)
 		return;
 	Postorder(root->lchild,vist);
 	Postorder(root->rchild,vist);
-	vist(root);
+	vist(root->data);
+}
+
+bool InOrderTraverse_Thr(BiThrTree T,VIST vist)
+{
+	BiThrTree root = T->lchild;
+	return false;
 }
 
