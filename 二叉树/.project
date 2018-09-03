@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Data_structure</name>
+	<name>Data_Structure</name>
 	<comment></comment>
 	<projects>
-		<project>Data_Structure</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -8,28 +8,65 @@
 #ifndef BTREE_H_
 #define BTREE_H_
 
+#include <iostream>
+using namespace std;
+
 typedef char Type;
 typedef enum {Link,Thread} PointerTag;
-typedef enum{false,true} bool;
+typedef bool VIST(Type data);
 
-typedef struct tree
+typedef struct BTreeNode
 {
 	Type data;
-	struct tree *lchild,*rchild;
-}BTree;
+	BTreeNode *lchild,*rchild;
+}BTreeNode;
 
-typedef struct BiThrNode{
+typedef struct BiThrNode
+{
 	Type data;
-	struct BiThrNode *lchild,*rchild;
-	PointerTag Ltag,RTag;
-}BiThrNode,*BiThrTree;
+	BiThrNode *lchild,*rchild;
+	PointerTag LTag,RTag;
+}BiThrNode;
 
-typedef void VIST(Type data);
+class BTree
+{
+public:
+	BTreeNode *root;
+public:
+	BTree();
+	~BTree();
+	void createBinTree(BTreeNode **);
+	void Preorder(BTreeNode *,VIST);
+	void Inorder(BTreeNode *,VIST);
+	void Postorder(BTreeNode *,VIST);
+	BTreeNode *getLchild(BTreeNode *, Type);
+	BTreeNode *getRchild(BTreeNode *, Type);
+};
 
-BTree *createBinTree(BTree *);
-void Preorder(BTree *,VIST);
-void Inorder(BTree *,VIST);
-void Postorder(BTree *,VIST);
-void display(Type);
+class BiThrTree
+{
+public:
+	BiThrNode *root;
+	BiThrNode *head;
+	static BiThrNode *pre;
+public:
+	BiThrTree();
+	~BiThrTree();
+	void createBinTree(BiThrNode **);
+	void Preorder(BiThrNode *,VIST);
+	void Inorder(BiThrNode *,VIST);
+	void Postorder(BiThrNode *,VIST);
+	bool display(Type);
+	BiThrNode *getLchild(BiThrNode *, Type);
+	BiThrNode *getRchild(BiThrNode *, Type);
+	bool InOrderTraverse_Thr(BiThrNode *,VIST);
+	bool InorderThreading(BiThrNode **,BiThrNode *);
+	void InThreading(BiThrNode *);
+};
+
+bool display(Type);
+
+
+
 
 #endif /* BTREE_H_ */
