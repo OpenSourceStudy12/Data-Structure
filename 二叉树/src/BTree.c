@@ -1,6 +1,6 @@
+#include <BTree.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <BTree.h>
 
 //创建二叉树(先序遍历)
 BTree *createBinTree(BTree *root)
@@ -72,9 +72,10 @@ BTree *getRchild(BTree *root, Type data)
 	}
 }
 
-void display(Type data)
+bool display(Type data)
 {
 	printf("%c",data);
+	return true;
 }
 
 //先序遍历
@@ -107,9 +108,70 @@ void Postorder(BTree *root,VIST vist)
 	vist(root->data);
 }
 
+//以线索链表为存储结构对二叉树遍历(中序)
 bool InOrderTraverse_Thr(BiThrTree T,VIST vist)
 {
-	BiThrTree root = T->lchild;
-	return false;
+	BiThrTree p = T->lchild;//二叉树根节点
+	while(p != T)
+	{
+		while(p->LTag == Link)//中序遍历访问的第一个节点
+			p= p->lchild;
+		if(!vist(p->data))
+			return false;
+		while(p->RTag == Thread && p->rchild != T)
+		{
+			p = p->rchild;
+			vist(p->data);
+		}
+		p = p->rchild;
+	}
+	return true;
 }
+
+BiThrTree pre= NULL;
+//二叉树的线索化
+bool InorderThreading(BiThrTree *Thrt,BiThrTree T)
+{
+	if((*Thrt = (BiThrTree)malloc(sizeof(BiThrNode))) == NULL)//头结点
+		return false;
+
+	(*Thrt)->LTag = Link;
+	(*Thrt)->RTag = Thread;
+	(*Thrt)->rchild = *Thrt;
+	if(!T)
+		(*Thrt)->lchild = (*Thrt);
+	else
+	{
+		(*Thrt)->lchild = T;
+		pre = (*Thrt);
+		InThreading(T);
+		pre->rchild = (*Thrt);
+		pre->RTag = Thread;
+		(*Thrt)->rchild = pre;
+	}
+	return true;
+}
+
+void InThreading(BiThrTree T)
+{
+	if(T)
+	{
+		InThreading(T->lchild);
+		if(!T->lchild)
+		{
+			T->LTag = Thread;
+			T->lchild = pre;
+		}
+		if(!pre->rchild)
+		{
+			pre->RTag = Thread;
+			pre->rchild = T;
+			pre = T;
+		}
+		InThreading(T->rchild);
+	}
+}
+
+
+
 

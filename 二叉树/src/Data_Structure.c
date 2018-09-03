@@ -4,12 +4,12 @@
  *  Created on: Aug 31, 2018
  *      Author: lrh
  */
-#include <stdio.h>
 #include <BTree.h>
 
 int main()
 {
 	BTree *root = NULL,*node = NULL;
+
 	Type data = '/';
 	printf("input BTree data char\n");
 
@@ -31,6 +31,8 @@ int main()
 	node = getRchild(root,data);//找右孩子
 	if(node)
 		printf("节点 ‘%c’ 右孩子为 ‘%c’ \n",data,node->data);
+
+
 	return 0;
 }
 
