@@ -137,9 +137,11 @@ bool InorderThreading(BiThrTree *Thrt,BiThrTree T)
 
 	(*Thrt)->LTag = Link;
 	(*Thrt)->RTag = Thread;
-	(*Thrt)->rchild = *Thrt;
 	if(!T)
+	{
 		(*Thrt)->lchild = (*Thrt);
+		(*Thrt)->rchild = *Thrt;
+	}
 	else
 	{
 		(*Thrt)->lchild = T;
@@ -166,8 +168,8 @@ void InThreading(BiThrTree T)
 		{
 			pre->RTag = Thread;
 			pre->rchild = T;
-			pre = T;
 		}
+		pre = T;
 		InThreading(T->rchild);
 	}
 }
