@@ -56,6 +56,7 @@ public:
 	BiThrTree();
 	~BiThrTree();
 	void createBinTree(BiThrNode **);
+	void DestroyBinTree(BiThrNode *);
 	void Preorder(BiThrNode *,VIST);
 	void Inorder(BiThrNode *,VIST);
 	void Postorder(BiThrNode *,VIST);
@@ -77,6 +78,7 @@ public:
 	bool SearchBST(BTreeNode *,Type key,BTreeNode *,BTreeNode **);
 	bool InsertBST(Type);
 	bool DeleteBST(BTreeNode **,Type);
+	void DestroyBinTree(BTreeNode *);
 	void InorderReverse(BTreeNode *T,VIST vist);
 };
 

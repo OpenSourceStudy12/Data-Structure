@@ -127,6 +127,9 @@ BiThrTree::BiThrTree() {
 	createBinTree(&root);
 }
 BiThrTree::~BiThrTree() {
+	DestroyBinTree(root);
+	root = NULL;
+	pre = NULL;
 }
 
 BiThrNode * BiThrTree::pre = NULL;
@@ -144,6 +147,18 @@ void BiThrTree::createBinTree(BiThrNode **T) {
 	}
 }
 
+void BiThrTree::DestroyBinTree(BiThrNode *T) {
+	if (T) {
+		DestroyBinTree(T->lchild);
+		if (T->lchild == NULL)
+			delete T->lchild;
+		T->lchild = NULL;
+		DestroyBinTree(T->rchild);
+		if (T->rchild == NULL)
+			delete T->rchild;
+		T->rchild = NULL;
+	}
+}
 /*
  *函数名：getLchild
  *功能：获得一个节点的左孩子
@@ -282,6 +297,8 @@ SearchTree::SearchTree() {
 	root = NULL;
 }
 SearchTree::~SearchTree() {
+	DestroyBinTree(root);
+	root = NULL;
 }
 
 bool SearchTree::SearchBST(BTreeNode *T, Type key, BTreeNode *pre,
@@ -363,5 +380,18 @@ void SearchTree::InorderReverse(BTreeNode *T,VIST vist){
 		InorderReverse(T->lchild,vist);
 		vist(T->data);
 		InorderReverse(T->rchild,vist);
+	}
+}
+
+void SearchTree::DestroyBinTree(BTreeNode *T) {
+	if (T) {
+		DestroyBinTree(T->lchild);
+		if (T->lchild == NULL)
+			delete T->lchild;
+		T->lchild = NULL;
+		DestroyBinTree(T->rchild);
+		if (T->rchild == NULL)
+			delete T->rchild;
+		T->rchild = NULL;
 	}
 }
