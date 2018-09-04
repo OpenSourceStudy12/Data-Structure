@@ -8,10 +8,12 @@
 #ifndef BTREE_H_
 #define BTREE_H_
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 using namespace std;
 
-typedef char Type;
+typedef int Type;
 typedef enum {Link,Thread} PointerTag;
 typedef bool VIST(Type data);
 
@@ -65,9 +67,20 @@ public:
 	void InThreading(BiThrNode *);
 };
 
+class SearchTree
+{
+public:
+	BTreeNode *root;
+public:
+	SearchTree();
+	~SearchTree();
+	bool SearchBST(BTreeNode *,Type key,BTreeNode *,BTreeNode **);
+	bool InsertBST(Type);
+	bool DeleteBST(BTreeNode **,Type);
+	void InorderReverse(BTreeNode *T,VIST vist);
+};
+
 bool display(Type);
-
-
 
 
 #endif /* BTREE_H_ */

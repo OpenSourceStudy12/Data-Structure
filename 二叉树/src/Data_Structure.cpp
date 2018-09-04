@@ -8,14 +8,10 @@
 
 int main()
 {
-	//BTree btree;
-	//BTreeNode *node;
-
-	BiThrTree bithrtree;
-	BiThrNode *node1;
 	Type data = '/';
-
-/*
+#if 0
+  	BTree btree;
+  	BTreeNode *node;
 	cout << "先序遍历顺序为：\n\t";
 	btree.Preorder(btree.root,display);//先序遍历
 	cout << endl;
@@ -32,8 +28,11 @@ int main()
 	node = btree.getRchild(btree.root,data);//找右孩子
 	if(node)
 		cout << "节点 " << data << " 右孩子为 " <<  node->data << endl;
-*/
+#endif
 
+#if 0
+	BiThrTree bithrtree;
+	BiThrNode *node1;
 	cout << "先序遍历顺序为：\n\t";
 	bithrtree.Preorder(bithrtree.root,display);//先序遍历
 	cout << endl;
@@ -55,6 +54,22 @@ int main()
 	bithrtree.InorderThreading(&bithrtree.head,bithrtree.root);
 	cout << "线索化中序遍历顺序" <<endl;
 	bithrtree.InOrderTraverse_Thr(bithrtree.head,display);
+
+#endif
+
+	SearchTree searchtree;
+	int p;
+	cout<<"输入元素：\n";
+	for(int i=0;i<5;i++){
+		cin>>p;
+		searchtree.InsertBST(p);
+	}
+	searchtree.InorderReverse(searchtree.root,display);
+	cout << "删除元素：\n";
+	cin >> p;
+	searchtree.DeleteBST(&(searchtree.root),p);
+	searchtree.InorderReverse(searchtree.root,display);
+
 	return 0;
 }
 
