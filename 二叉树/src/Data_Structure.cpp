@@ -9,11 +9,12 @@
 int main()
 {
 	//BTree btree;
-	BTreeNode *node;
+	//BTreeNode *node;
 
 	BiThrTree bithrtree;
 	BiThrNode *node1;
 	Type data = '/';
+
 /*
 	cout << "先序遍历顺序为：\n\t";
 	btree.Preorder(btree.root,display);//先序遍历

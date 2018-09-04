@@ -3,12 +3,16 @@
 BTree::BTree()
 {
 	cout << "input BTree data char\n";
-	createBinTree(&root);
+	CreateBinTree(&root);
 }
-BTree::~BTree(){}
+BTree::~BTree()
+{
+	DestroyBinTree(root);
+	root = NULL;
+}
 
 //创建二叉树(先序遍历)
-void BTree:: createBinTree(BTreeNode **T)
+void BTree:: CreateBinTree(BTreeNode **T)
 {
 	char ch;
 	cin.get(ch);
@@ -18,8 +22,24 @@ void BTree:: createBinTree(BTreeNode **T)
 	{
 		*T = new BTreeNode;
 		(*T)->data = ch;
-		createBinTree(&(*T)->lchild);
-		createBinTree(&(*T)->rchild);
+		CreateBinTree(&(*T)->lchild);
+		CreateBinTree(&(*T)->rchild);
+	}
+}
+
+//销毁二叉树(后序遍历)
+void BTree:: DestroyBinTree(BTreeNode *T)
+{
+	if(T)
+	{
+		DestroyBinTree(T->lchild);
+		if(T->lchild == NULL)
+			delete T->lchild;
+		T->lchild = NULL;
+		DestroyBinTree(T->rchild);
+		if(T->rchild == NULL)
+			delete T->rchild;
+		T->rchild = NULL;
 	}
 }
 

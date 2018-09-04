@@ -35,7 +35,8 @@ public:
 public:
 	BTree();
 	~BTree();
-	void createBinTree(BTreeNode **);
+	void CreateBinTree(BTreeNode **);
+	void DestroyBinTree(BTreeNode *);
 	void Preorder(BTreeNode *,VIST);
 	void Inorder(BTreeNode *,VIST);
 	void Postorder(BTreeNode *,VIST);
