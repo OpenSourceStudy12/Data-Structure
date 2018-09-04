@@ -1,62 +1,3 @@
-# 树的分类
-- 1.二叉树  
-	- 1.1 完全二叉树  
-   	- 1.2 满二叉树  
-- 2.平衡二叉树   
-	- 性质：  
-		- 1.左右两棵子树的高度差不超过1
-		- 2.左右两颗子树都是平衡二叉树
-	- 实现算法：   
-  		- 平衡树之 AVL 树 
- 			AVL树是一种特殊类型的二叉树，它的每个结点都保存一份额外的信息：结点的平衡因子。
-			结点的平衡因子 = 左子树的高度 - 右子树的高度  
-			插入和删除操作都会导致AVL树的自我调整（自我平衡），使得所有结点的平衡因子保持为+1、-1或0。
-			当子树的根结点的平衡因子为+1时，它是左倾斜的（left-heavy)。
-			当子树的根结点的平衡因子为 -1时，它是右倾斜的(right-heavy)。
-			一颗子树的根结点的平衡因子就代表该子树的平衡性。
-			保持所有子树几乎都处于平衡状态，AVL树在总体上就能够基本保持平衡。
-			AVL树的基本查找、插入结点的操作和二叉树的操作一样。但是，当向AVL树中插入一个结点后，还有一些额外的工作要做。首先，必须计算因插入操作对平衡因子带来的改变。其次，如果任何平衡因子变成了+/-2，就必须从这个结点开始往下重新平衡这颗树，这个重新平衡的过程就称为旋转。
-			AVL的旋转：
-				为方便理解在何时执行哪一种旋转，设x代表刚插入AVL树中的结点，设A为离x最近且平衡因子更改为2的绝对值的祖先。
-			LL旋转：
-				如下图所示，当x位于A的左子树的左子树上时，执行LL旋转。
-				设left为A的左子树，要执行LL旋转，将A的左指针指向left的右子结点，left的右指针指向A，将原来指向A的指针指向left。
-				旋转过后，将A和left的平衡因子都改为0。所有其他结点的平衡因子没有发生变化。  
-![AVL-LL旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-LL旋转.png)  
-			LR旋转：  
-				当x位于A的左子树的右子树上时，执行LR旋转。
-				设left是A的左子结点，并设A的子孙结点grandchild为left的右子结点。
-				要执行LR旋转，将left的右子结点指向grandchild的左子结点，grandchild的左子结点指向left，A的左子结点指向grandchild的右子结点，再将grandchild的右子结点指向A，最后将原来指向A的指针指向grandchild。
-				执行LR旋转之后，调整结点的平衡因子取决于旋转前grandchild结点的原平衡因子值。
-				如果grandchild结点的原始平衡因子为+1，就将A的平衡因子设为-1，将left的平衡因子设为0。
-				如果grandchild结点的原始平衡因子为0，就将A和left的平衡因子都设置为0。
-				如果grandchild结点的原始平衡因子为-1，就将A的平衡因子设置为0，将left的平衡因子设置为+1。
-				在所有的情况下，grandchild的新平衡因子都是0。所有其他结点的平衡因子都没有改变。
-![AVL-LR旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-LR旋转.png)  
-			RL旋转：  
-				当x位于A的右子树的左子树上时，执行RL旋转。RL旋转与LR旋转是对称的关系。
-				设A的右子结点为right，right的左子结点为grandchild。要执行RL旋转，将right结点的左子结点指向grandchild的右子结点，将grandchild的右子结点指向right，将A的右子结点指向grandchild的左子结点，将grandchild的左子结点指向A，最后将原来指向A的指针指向grandchild。
-				执行RL旋转以后，调整结点的平衡因子取决于旋转前grandchild结点的原平衡因子。这里也有三种情况需要考虑：
-				如果grandchild的原始平衡因子值为+1，将A的平衡因子更新为0，right的更新为-1；
-				如果grandchild的原始平衡因子值为  0，将A和right的平衡因子都更新为0；
-				如果grandchild的原始平衡因子值为-1，将A的平衡因子更新为+1，right的更新为0；
-				在所有情况中，都将grandchild的新平衡因子设置为0。所有其他结点的平衡因子不发生改变。    
-![AVL-RL旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-RL旋转.png)    
-			RR旋转： 
-				当x位于A的右子树的右子树上时，执行RR旋转。
-				RR旋转与LL旋转是对称的关系。
-				设A的右子结点为Right。要执行RR旋转，将A的右指针指向right的左子结点，right的左指针指向A，原来指向A的指针修改为指向right。
-				完成旋转以后，将A和left的平衡因子都修改为0。所有其他结点的平衡因子都没有改变。    
-![AVL-RR旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-RR旋转.png)   
- 	  - 平衡树之红黑树 STL(set/map/vector/list)  
- 	  - Treap
-- 3 二叉搜索树
-		性质：
-			若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 
-			若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 
-			它的左、右子树也分别为二叉排序树  
-- 4 B树
-
 # 一 树
 - 基本概念
 	- 节点  
@@ -130,7 +71,7 @@
 
   - 先序遍历：根--左--右    
   - 中序遍历：左--根--右  
-  - 后序遍历：左--右--根
+  - 后序遍历：左--右--根  
 
 ## 1.2 完全二叉树
 - 定义：深度为k,有n个结点的二叉树，当且仅当其每一个结点都与深度为k的满二叉树中编号从1到n的结点一一对应时，称为完全二叉树
@@ -141,7 +82,61 @@
 ## 1.3 满二叉树
 - 定义：深度为 k 且有 2^k-1 个结点的二叉树为满二叉树
 
-
+## 1.4 平衡二叉树   
+- 性质：  
+	- 1.左右两棵子树的高度差不超过1
+	- 2.左右两颗子树都是平衡二叉树
+### 实现算法：   
+### 1.4.1 平衡树之 AVL 树   
+- AVL树是一种特殊类型的二叉树，它的每个结点都保存一份额外的信息：结点的平衡因子。
+	- 结点的平衡因子 = 左子树的高度 - 右子树的高度  
+	- 插入和删除操作都会导致AVL树的自我调整（自我平衡），使得所有结点的平衡因子保持为+1、-1或0。
+		当子树的根结点的平衡因子为+1时，它是左倾斜的（left-heavy)。
+		当子树的根结点的平衡因子为 -1时，它是右倾斜的(right-heavy)。
+		一颗子树的根结点的平衡因子就代表该子树的平衡性。
+		保持所有子树几乎都处于平衡状态，AVL树在总体上就能够基本保持平衡。
+		AVL树的基本查找、插入结点的操作和二叉树的操作一样。但是，当向AVL树中插入一个结点后，还有一些额外的工作要做。首先，必须计算因插入操作对平衡因子带来的改变。其次，如果任何平衡因子变成了+/-2，就必须从这个结点开始往下重新平衡这颗树，这个重新平衡的过程就称为旋转。
+	- AVL的旋转：  
+		为方便理解在何时执行哪一种旋转，设x代表刚插入AVL树中的结点，设A为离x最近且平衡因子更改为2的绝对值的祖先。  
+	   	- LL旋转：  
+			如下图所示，当x位于A的左子树的左子树上时，执行LL旋转。
+			设left为A的左子树，要执行LL旋转，将A的左指针指向left的右子结点，left的右指针指向A，将原来指向A的指针指向left。
+			旋转过后，将A和left的平衡因子都改为0。所有其他结点的平衡因子没有发生变化。  
+![AVL-LL旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-LL旋转.png)  
+	    - LR旋转：  
+			当x位于A的左子树的右子树上时，执行LR旋转。
+			设left是A的左子结点，并设A的子孙结点grandchild为left的右子结点。
+			要执行LR旋转，将left的右子结点指向grandchild的左子结点，grandchild的左子结点指向left，A的左子结点指向grandchild的右子结点，再将grandchild的右子结点指向A，最后将原来指向A的指针指向grandchild。
+			执行LR旋转之后，调整结点的平衡因子取决于旋转前grandchild结点的原平衡因子值。
+			如果grandchild结点的原始平衡因子为+1，就将A的平衡因子设为-1，将left的平衡因子设为0。
+			如果grandchild结点的原始平衡因子为0，就将A和left的平衡因子都设置为0。
+			如果grandchild结点的原始平衡因子为-1，就将A的平衡因子设置为0，将left的平衡因子设置为+1。
+			在所有的情况下，grandchild的新平衡因子都是0。所有其他结点的平衡因子都没有改变。
+![AVL-LR旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-LR旋转.png)  
+		- RL旋转：  
+			当x位于A的右子树的左子树上时，执行RL旋转。RL旋转与LR旋转是对称的关系。
+			设A的右子结点为right，right的左子结点为grandchild。要执行RL旋转，将right结点的左子结点指向grandchild的右子结点，将grandchild的右子结点指向right，将A的右子结点指向grandchild的左子结点，将grandchild的左子结点指向A，最后将原来指向A的指针指向grandchild。
+			执行RL旋转以后，调整结点的平衡因子取决于旋转前grandchild结点的原平衡因子。这里也有三种情况需要考虑：
+			如果grandchild的原始平衡因子值为+1，将A的平衡因子更新为0，right的更新为-1；
+			如果grandchild的原始平衡因子值为  0，将A和right的平衡因子都更新为0；
+			如果grandchild的原始平衡因子值为-1，将A的平衡因子更新为+1，right的更新为0；
+			在所有情况中，都将grandchild的新平衡因子设置为0。所有其他结点的平衡因子不发生改变。    
+![AVL-RL旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-RL旋转.png)    
+		- RR旋转：   
+			当x位于A的右子树的右子树上时，执行RR旋转。
+			RR旋转与LL旋转是对称的关系。
+			设A的右子结点为Right。要执行RR旋转，将A的右指针指向right的左子结点，right的左指针指向A，原来指向A的指针修改为指向right。
+			完成旋转以后，将A和left的平衡因子都修改为0。所有其他结点的平衡因子都没有改变。    
+![AVL-RR旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-RR旋转.png)   
+### 1.4.2 平衡树之红黑树 STL(set/map/vector/list)  
+### 1.4.3 Treap
+ 
+## 1.5 二叉搜索树  
+- 性质：  
+	- 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；   
+	- 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；   
+	- 它的左、右子树也分别为二叉排序树    
+## 1.6 B树  
 
 
 
