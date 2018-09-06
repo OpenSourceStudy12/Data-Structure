@@ -21,7 +21,8 @@
 		是一种二叉链表表示 
 		将树表示为孩子兄弟链表是可以转换为二叉树  
 		森林和树可以和二叉树相互转换   
-![双亲存储结构](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/孩子--兄弟链表存储结构.png)  
+![孩子兄弟表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/孩子兄弟表示.png)  
+![孩子兄弟链表表示](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/孩子兄弟链表表示.png)  
 - 树的基本操作  
 	- InitTree(&T);//构造空树  
 	- DestroyTree(&T);//销毁树T  
