@@ -30,6 +30,19 @@ typedef struct BiThrNode
 	PointerTag LTag,RTag;
 }BiThrNode;
 
+typedef struct AVLNode
+{
+	Type data;
+	int hight;
+	AVLNode *lchild,*rchild;
+
+	AVLNode(Type data){
+		this->data = data;
+		hight = 0;
+		lchild = rchild = NULL;
+	}
+}AVLNode;
+
 class BTree
 {
 public:
@@ -80,6 +93,26 @@ public:
 	bool DeleteBST(BTreeNode **,Type);
 	void DestroyBinTree(BTreeNode *);
 	void InorderReverse(BTreeNode *T,VIST vist);
+};
+
+class AVLTree
+{
+private:
+	AVLNode *root;
+	int GetHeight(AVLNode *);
+	AVLNode *InsertAVL(AVLNode *,Type);
+	AVLNode *NodeDeleteAVL(AVLNode *,Type,bool &);
+	AVLNode *SearchNode(AVLNode *,Type);
+	AVLNode *L_Rotate(AVLNode *);
+	AVLNode *R_Rotate(AVLNode *);
+	AVLNode *LR_Rotate(AVLNode *);
+	AVLNode *RL_Rotate(AVLNode *);
+public:
+	AVLTree();
+	~AVLTree();
+	void InsertAVL(Type);
+	bool NodeDeleteAVL(Type);
+	AVLNode *SearchNode(Type);
 };
 
 bool display(Type);

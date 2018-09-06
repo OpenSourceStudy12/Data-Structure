@@ -343,22 +343,20 @@ bool SearchTree::InsertBST(Type key) {
  * 3.左右子树都有
  */
 bool SearchTree::DeleteBST(BTreeNode **T, Type key) {
-	if(!*T)
+	if (!*T)
 		return false;
-	if((*T)->data == key){
-		BTreeNode *s,*p;
-		if((*T)->lchild == NULL){ //只有右子树
+	if ((*T)->data == key) {
+		BTreeNode *s, *p;
+		if ((*T)->lchild == NULL) { //只有右子树
 			s = (*T);
 			(*T) = (*T)->rchild;
-		}
-		else if((*T)->rchild == NULL){ //只有左子树
+		} else if ((*T)->rchild == NULL) { //只有左子树
 			s = (*T);
 			(*T) = (*T)->lchild;
-		}
-		else{	//左右子树都有,
+		} else {	//左右子树都有,
 			p = (*T);
 			s = (*T)->rchild;	//查找后继节点
-			while(s->lchild){
+			while (s->lchild) {
 				p = s;
 				s = s->lchild;
 			}
@@ -367,19 +365,18 @@ bool SearchTree::DeleteBST(BTreeNode **T, Type key) {
 		}
 		delete s;
 		return true;
-	}
-	else if((*T)->data > key)
-		DeleteBST(&(*T)->lchild,key);//与左子树比较
+	} else if ((*T)->data > key)
+		DeleteBST(&(*T)->lchild, key);	//与左子树比较
 	else
-		DeleteBST(&(*T)->rchild,key);//与右子树比较
+		DeleteBST(&(*T)->rchild, key);	//与右子树比较
 	return false;
 }
 
-void SearchTree::InorderReverse(BTreeNode *T,VIST vist){
-	if(T){
-		InorderReverse(T->lchild,vist);
+void SearchTree::InorderReverse(BTreeNode *T, VIST vist) {
+	if (T) {
+		InorderReverse(T->lchild, vist);
 		vist(T->data);
-		InorderReverse(T->rchild,vist);
+		InorderReverse(T->rchild, vist);
 	}
 }
 
@@ -394,4 +391,167 @@ void SearchTree::DestroyBinTree(BTreeNode *T) {
 			delete T->rchild;
 		T->rchild = NULL;
 	}
+}
+AVLTree::AVLTree() {
+	root = NULL;
+}
+AVLTree::~AVLTree() {
+}
+
+inline int AVLTree::GetHeight(AVLNode *T) {
+	return NULL == T ? -1 : T->hight;
+}
+/*********************************************
+ *参数：待插入元素,当前节点
+ *返回值：当前子树根节点
+ *功能：插入元素到当前节点的子树
+ **********************************************/
+AVLNode *AVLTree::InsertAVL(AVLNode *T, Type key) {
+	if (NULL == T)
+		return T = new AVLNode(key);
+	else {
+		if (key == T->data)
+			return T;
+		else if (key < T->data)
+			T->lchild = InsertAVL(T->lchild, key);
+		else
+			T->rchild = InsertAVL(T->rchild, key);
+	}
+	if (2 == GetHeight(T->lchild) - GetHeight(T->rchild)) {
+		if (key < T->lchild->data)
+			T = R_Rotate(T);
+		else
+			T = LR_Rotate(T);
+	} else if (-2 == GetHeight(T->lchild) - GetHeight(T->rchild)) {
+		if (key > T->rchild->data)
+			T = L_Rotate(T);
+		else
+			T = RL_Rotate(T);
+	}
+	T->hight = max(GetHeight(T->lchild), GetHeight(T->rchild)) + 1;
+	return T;
+}
+
+void AVLTree::InsertAVL(Type key) {
+	root = InsertAVL(root, key);
+}
+/*********************************************
+ *参数：待删除元素,当前节点
+ *返回值：当前子树根节点
+ *功能：删除元素
+ **********************************************/
+AVLNode *AVLTree::NodeDeleteAVL(AVLNode *T, Type key, bool &isDelSucceed) {
+	if (NULL == T)
+		return NULL;
+	else {
+		if (key == T->data) {
+			if (NULL == T->rchild) {
+				AVLNode *cur = T;
+				T = T->lchild;
+				delete cur;
+				isDelSucceed = true;
+				return T;
+			} else	//找到右子树最小的元素代替，然后删除
+			{
+				AVLNode *cur = T->rchild;
+				while (cur->lchild != NULL)
+					cur = cur->lchild;
+				T->data = cur->data;
+				T->rchild = NodeDeleteAVL(T->rchild, cur->data, isDelSucceed);
+			}
+		} else if (key < T->data)
+			T->lchild = NodeDeleteAVL(T->lchild, key, isDelSucceed);
+		else
+			T->rchild = NodeDeleteAVL(T->rchild, key, isDelSucceed);
+
+		if (-2 == GetHeight(T->lchild) - GetHeight(T->rchild)) {	//删除的是左子树上的
+			if (GetHeight(T->rchild->rchild) >= GetHeight(T->rchild->lchild))
+				T = L_Rotate(T);
+			else
+				T = RL_Rotate(T);
+		} else if (2 == GetHeight(T->lchild) - GetHeight(T->rchild)) {
+			if (GetHeight(T->lchild->lchild) >= GetHeight(T->lchild->rchild))
+				T = R_Rotate(T);
+			else
+				T = LR_Rotate(T);
+		}
+		T->hight = max(GetHeight(T->lchild), GetHeight(T->rchild)) + 1;
+	}
+	return T;
+}
+bool AVLTree::NodeDeleteAVL(Type key) {
+	bool isDelSucceed = false;
+	root = NodeDeleteAVL(root, key, isDelSucceed);
+	return isDelSucceed;
+}
+
+/*********************************************
+ *参数：待查找元素，当前节点
+ *返回值：元素所在节点
+ *功能：返回元素所在节点
+ **********************************************/
+AVLNode *AVLTree::SearchNode(AVLNode *T, Type key) {
+	if (NULL == T)
+		return NULL;
+	else if (key == T->data)
+		return T;
+	else if (key < T->data)
+		return SearchNode(T->lchild, key);
+	return SearchNode(T->rchild, key);
+}
+
+/*********************************************
+ *参数：当前节点
+ *返回值：当前子树根节点
+ *功能：左旋调平衡
+ **********************************************/
+AVLNode *AVLTree::L_Rotate(AVLNode *T) {
+	AVLNode *lChildNode = T->rchild->lchild, *newRoot = T->rchild;
+	T->rchild->lchild = T;
+	T->rchild = lChildNode;
+	T->hight = max(GetHeight(T->lchild), GetHeight(T->rchild)) + 1;
+//	if (NULL != T->rchild)
+//		T->rchild->hight = max(GetHeight(T->rchild->lchild),
+//				GetHeight(T->rchild->rchild)) + 1;
+	newRoot->hight = max(GetHeight(newRoot->lchild), GetHeight(newRoot->rchild))
+			+ 1;
+	return newRoot;
+}
+
+/*********************************************
+ *参数：当前节点
+ *返回值：当前子树根节点
+ *功能：右旋调平衡
+ **********************************************/
+AVLNode *AVLTree::R_Rotate(AVLNode *T) {
+	AVLNode *rChildNode = T->lchild->rchild, *newRoot = T->lchild;
+	T->lchild->rchild = T;
+	T->lchild = rChildNode;
+	T->hight = max(GetHeight(T->lchild), GetHeight(T->rchild)) + 1;
+//	if (NULL != T->lchild)
+//		T->lchild->hight = max(GetHeight(T->lchild->lchild),
+//				GetHeight(T->lchild->rchild)) + 1;
+	newRoot->hight = max(GetHeight(newRoot->lchild), GetHeight(newRoot->rchild))
+			+ 1;
+	return newRoot;
+}
+
+/*********************************************
+ *参数：当前节点
+ *返回值：当前子树根节点
+ *功能：先左旋后右旋调平衡
+ **********************************************/
+AVLNode *AVLTree::LR_Rotate(AVLNode *T) {
+	T->lchild = L_Rotate(T->lchild);
+	return R_Rotate(T);
+}
+
+/*********************************************
+ *参数：当前节点
+ *返回值：当前子树根节点
+ *功能：先右旋后左旋调平衡
+ **********************************************/
+AVLNode *AVLTree::RL_Rotate(AVLNode *T) {
+	T->rchild = R_Rotate(T->rchild);
+	return L_Rotate(T);
 }
