@@ -135,7 +135,7 @@
 			完成旋转以后，将A和left的平衡因子都修改为0。所有其他结点的平衡因子都没有改变。    
 ![AVL-RR旋转](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/AVL-RR旋转.png)   
  
-### 1.5.2 平衡树之红黑树 STL(set/multiset/map//multimap) 
+### 1.5.2 平衡树之红黑树 STL 
 
 ![RB_tree](https://github.com/OpenSourceStudy12/Data-Structure/blob/master/Image/RB_tree.png)    
 
