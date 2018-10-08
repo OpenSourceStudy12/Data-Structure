@@ -13,23 +13,24 @@
 #include <iostream>
 using namespace std;
 
-typedef int Type;
+typedef char Type;
 typedef enum {Link,Thread} PointerTag;
 typedef bool VIST(Type data);
 
+//二叉树节点
 typedef struct BTreeNode
 {
 	Type data;
 	BTreeNode *lchild,*rchild;
 }BTreeNode;
-
+//线索树节点
 typedef struct BiThrNode
 {
 	Type data;
 	BiThrNode *lchild,*rchild;
 	PointerTag LTag,RTag;
 }BiThrNode;
-
+//AVL树节点
 typedef struct AVLNode
 {
 	Type data;
@@ -42,7 +43,7 @@ typedef struct AVLNode
 		lchild = rchild = NULL;
 	}
 }AVLNode;
-
+//二叉树
 class BTree
 {
 public:
@@ -58,18 +59,18 @@ public:
 	BTreeNode *getLchild(BTreeNode *, Type);
 	BTreeNode *getRchild(BTreeNode *, Type);
 };
-
+//线索树
 class BiThrTree
 {
 public:
 	BiThrNode *root;
 	BiThrNode *head;
-	static BiThrNode *pre;
+	BiThrNode *pre;
 public:
 	BiThrTree();
 	~BiThrTree();
 	void createBinTree(BiThrNode **);
-	void DestroyBinTree(BiThrNode *);
+	void DestroyBinTree(BiThrNode *,BiThrNode *);
 	void Preorder(BiThrNode *,VIST);
 	void Inorder(BiThrNode *,VIST);
 	void Postorder(BiThrNode *,VIST);
@@ -80,7 +81,7 @@ public:
 	bool InorderThreading(BiThrNode **,BiThrNode *);
 	void InThreading(BiThrNode *);
 };
-
+//搜索树/查找树
 class SearchTree
 {
 public:
@@ -94,7 +95,7 @@ public:
 	void DestroyBinTree(BTreeNode *);
 	void InorderReverse(BTreeNode *T,VIST vist);
 };
-
+//AVL平衡树
 class AVLTree
 {
 private:

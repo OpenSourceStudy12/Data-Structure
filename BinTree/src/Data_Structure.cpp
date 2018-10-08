@@ -10,6 +10,7 @@ int main()
 {
 	Type data = '/';
 #if 0
+
   	BTree btree;
   	BTreeNode *node;
 	cout << "先序遍历顺序为：\n\t";
@@ -52,15 +53,17 @@ int main()
 
 	cout << "线索化" << endl;
 	bithrtree.InorderThreading(&bithrtree.head,bithrtree.root);
+
 	cout << "线索化中序遍历顺序" <<endl;
 	bithrtree.InOrderTraverse_Thr(bithrtree.head,display);
 
 #endif
 
+#if 1
 	SearchTree searchtree;
 	int p;
 	cout<<"输入元素：\n";
-	for(int i=0;i<5;i++){
+	for(int i=0;i<10;i++){
 		cin>>p;
 		searchtree.InsertBST(p);
 	}
@@ -69,7 +72,7 @@ int main()
 	cin >> p;
 	searchtree.DeleteBST(&(searchtree.root),p);
 	searchtree.InorderReverse(searchtree.root,display);
-
+#endif
 	return 0;
 }
 

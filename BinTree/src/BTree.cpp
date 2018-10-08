@@ -32,13 +32,9 @@ void BTree::CreateBinTree(BTreeNode **T) {
 void BTree::DestroyBinTree(BTreeNode *T) {
 	if (T) {
 		DestroyBinTree(T->lchild);
-		if (T->lchild == NULL)
-			delete T->lchild;
-		T->lchild = NULL;
 		DestroyBinTree(T->rchild);
-		if (T->rchild == NULL)
-			delete T->rchild;
-		T->rchild = NULL;
+		T->lchild = T->rchild = NULL;
+		delete T;
 	}
 }
 
@@ -57,18 +53,15 @@ BTreeNode * BTree::getLchild(BTreeNode *T, Type data) //获得一个节点的左
 
 	if (T->data == data) //找到待查找节点，返回其左孩子
 		return T->lchild;
-	else //找到待查找节点，继续在左子树，右子树中找
-	{
+	else { //找到待查找节点，继续在左子树，右子树中找
 		p_lchild = getLchild(T->lchild, data);
 		if (p_lchild != NULL) //左子树种找到则返回
 			return p_lchild;
-		else //左子树没有找到找右子树
-		{
+		else { //左子树没有找到找右子树
 			p_rchild = getLchild(T->rchild, data);
 			if (p_rchild != NULL) //右子树找到
 				return p_rchild;
-			else
-				//右子树未找到
+			else //右子树未找到
 				return NULL;
 		}
 	}
@@ -125,14 +118,17 @@ void BTree::Postorder(BTreeNode *T, VIST vist) {
 BiThrTree::BiThrTree() {
 	cout << "input BTree data char\n";
 	createBinTree(&root);
+	head = pre = NULL;
 }
 BiThrTree::~BiThrTree() {
-	DestroyBinTree(root);
+	DestroyBinTree(head,head->rchild);
+	delete head;
+	head = NULL;
 	root = NULL;
 	pre = NULL;
 }
 
-BiThrNode * BiThrTree::pre = NULL;
+//BiThrNode * BiThrTree::pre = NULL;
 //创建二叉树(先序遍历)
 void BiThrTree::createBinTree(BiThrNode **T) {
 	char ch;
@@ -147,17 +143,23 @@ void BiThrTree::createBinTree(BiThrNode **T) {
 	}
 }
 
-void BiThrTree::DestroyBinTree(BiThrNode *T) {
-	if (T) {
-		DestroyBinTree(T->lchild);
-		if (T->lchild == NULL)
-			delete T->lchild;
-		T->lchild = NULL;
-		DestroyBinTree(T->rchild);
-		if (T->rchild == NULL)
-			delete T->rchild;
-		T->rchild = NULL;
-	}
+void BiThrTree::DestroyBinTree(BiThrNode *H,BiThrNode *T) {
+//按线索化序列反序方式删除
+//	if(T != H){
+//		if(T->LTag == Link){
+//			BiThrNode *temp = T->lchild;
+//			DestroyBinTree(H,temp);
+//		}else if(T->LTag == Thread){
+//			DestroyBinTree(H,T->lchild);
+//			delete T;
+//		}
+//	}
+//按二叉树后序遍历方式删除
+	if (T->LTag == Link)
+		DestroyBinTree(H, T->lchild);
+	if (T->RTag == Link)
+		DestroyBinTree(H, T->rchild);
+	delete T;
 }
 /*
  *函数名：getLchild
@@ -174,18 +176,15 @@ BiThrNode * BiThrTree::getLchild(BiThrNode *T, Type data) //获得一个节点�
 
 	if (T->data == data) //找到待查找节点，返回其左孩子
 		return T->lchild;
-	else //找到待查找节点，继续在左子树，右子树中找
-	{
+	else { //找到待查找节点，继续在左子树，右子树中找
 		p_lchild = getLchild(T->lchild, data);
 		if (p_lchild != NULL) //左子树种找到则返回
 			return p_lchild;
-		else //左子树没有找到找右子树
-		{
+		else { //左子树没有找到找右子树
 			p_rchild = getLchild(T->rchild, data);
 			if (p_rchild != NULL) //右子树找到
 				return p_rchild;
-			else
-				//右子树未找到
+			else //右子树未找到
 				return NULL;
 		}
 	}
@@ -253,10 +252,11 @@ bool BiThrTree::InOrderTraverse_Thr(BiThrNode *T, VIST vist) {
 		}
 		p = p->rchild;
 	}
+	cout << endl;
 	return true;
 }
 
-//二叉树的线索化
+//二叉树的线索化（中序）
 bool BiThrTree::InorderThreading(BiThrNode **Thrt, BiThrNode *T) {
 	if ((*Thrt = new BiThrNode) == NULL) //头结点
 		return false;
@@ -264,7 +264,7 @@ bool BiThrTree::InorderThreading(BiThrNode **Thrt, BiThrNode *T) {
 	(*Thrt)->LTag = Link;
 	(*Thrt)->RTag = Thread;
 	if (!T) {
-		(*Thrt)->lchild = (*Thrt);
+		(*Thrt)->lchild = *Thrt;
 		(*Thrt)->rchild = *Thrt;
 	} else {
 		(*Thrt)->lchild = T;
@@ -353,7 +353,7 @@ bool SearchTree::DeleteBST(BTreeNode **T, Type key) {
 		} else if ((*T)->rchild == NULL) { //只有左子树
 			s = (*T);
 			(*T) = (*T)->lchild;
-		} else {	//左右子树都有,
+		} else {	//左右子树都有
 			p = (*T);
 			s = (*T)->rchild;	//查找后继节点
 			while (s->lchild) {
@@ -372,6 +372,7 @@ bool SearchTree::DeleteBST(BTreeNode **T, Type key) {
 	return false;
 }
 
+//中序遍历二叉搜索树
 void SearchTree::InorderReverse(BTreeNode *T, VIST vist) {
 	if (T) {
 		InorderReverse(T->lchild, vist);
@@ -451,8 +452,7 @@ AVLNode *AVLTree::NodeDeleteAVL(AVLNode *T, Type key, bool &isDelSucceed) {
 				delete cur;
 				isDelSucceed = true;
 				return T;
-			} else	//找到右子树最小的元素代替，然后删除
-			{
+			} else	{ //找到右子树最小的元素代替，然后删除
 				AVLNode *cur = T->rchild;
 				while (cur->lchild != NULL)
 					cur = cur->lchild;
