@@ -11,9 +11,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+
 using namespace std;
 
-typedef char Type;
+typedef int Type;
 typedef enum {Link,Thread} PointerTag;
 typedef bool VIST(Type data);
 
@@ -22,6 +23,11 @@ typedef struct BTreeNode
 {
 	Type data;
 	BTreeNode *lchild,*rchild;
+
+	BTreeNode(Type data){
+		this->data = data;
+		lchild = rchild = NULL;
+	}
 }BTreeNode;
 //线索树节点
 typedef struct BiThrNode
@@ -86,11 +92,15 @@ class SearchTree
 {
 public:
 	BTreeNode *root;
+private:
+	BTreeNode * InsertBST(BTreeNode*,Type);
+	BTreeNode * SearchBST(BTreeNode *,Type);
 public:
 	SearchTree();
 	~SearchTree();
-	bool SearchBST(BTreeNode *,Type key,BTreeNode *,BTreeNode **);
-	bool InsertBST(Type);
+	BTreeNode * SearchBST(Type);
+//	bool InsertBST(Type);
+	bool Insert(Type);
 	bool DeleteBST(BTreeNode **,Type);
 	void DestroyBinTree(BTreeNode *);
 	void InorderReverse(BTreeNode *T,VIST vist);
@@ -108,15 +118,20 @@ private:
 	AVLNode *R_Rotate(AVLNode *);
 	AVLNode *LR_Rotate(AVLNode *);
 	AVLNode *RL_Rotate(AVLNode *);
+	void InorderReverse(AVLNode *T,VIST vist);
+	AVLNode * SearchAVL(AVLNode*,Type);
 public:
-	AVLTree();
+	AVLTree(AVLNode *T=NULL);
 	~AVLTree();
-	void InsertAVL(Type);
+	void Insert(Type);
+//	void InsertAVL(Type);
 	bool NodeDeleteAVL(Type);
 	AVLNode *SearchNode(Type);
+	void InorderReverse(VIST vist);
+	AVLNode * SearchAVL(Type);
 };
 
 bool display(Type);
-
+bool display1(Type);
 
 #endif /* BTREE_H_ */

@@ -4,7 +4,8 @@
  *  Created on: Aug 31, 2018
  *      Author: lrh
  */
-#include <BTree.h>
+#include "BTree.h"
+#include "data.h"
 
 int main()
 {
@@ -59,21 +60,31 @@ int main()
 
 #endif
 
-#if 1
+#if 0
+	int value;
 	SearchTree searchtree;
-	int p;
-	cout<<"输入元素：\n";
-	for(int i=0;i<10;i++){
-		cin>>p;
-		searchtree.InsertBST(p);
-	}
-	searchtree.InorderReverse(searchtree.root,display);
-	cout << "删除元素：\n";
-	cin >> p;
-	searchtree.DeleteBST(&(searchtree.root),p);
-	searchtree.InorderReverse(searchtree.root,display);
-#endif
+	data_create("data",50000);
+	data_read("data",searchtree);
+	searchtree.InorderReverse(searchtree.root,display1);
+	cout<<"查找数据："<<endl;
+	cin>>value;
+	searchtree.SearchBST(value);
 	return 0;
+#endif
+
+#if 1
+	int value;
+	AVLTree avltree;
+	AVLNode* avlnode;
+	data_create("data",50000);
+	data_read("data",avltree);
+	avltree.InorderReverse(display1);
+	cout<<"查找数据："<<endl;
+	cin>>value;
+	avlnode = avltree.SearchAVL(value);
+	if(NULL != avlnode)
+		cout<<"value = "<<value<<endl;
+#endif
 }
 
 

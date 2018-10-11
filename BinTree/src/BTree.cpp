@@ -5,6 +5,10 @@ bool display(Type data) {
 	return true;
 }
 
+bool display1(Type data) {
+	cout << data << endl;
+	return true;
+}
 BTree::BTree() {
 	cout << "input BTree data char\n";
 	CreateBinTree(&root);
@@ -21,8 +25,7 @@ void BTree::CreateBinTree(BTreeNode **T) {
 	if (ch == ' ')
 		*T = NULL;
 	else {
-		*T = new BTreeNode;
-		(*T)->data = ch;
+		*T = new BTreeNode(ch);
 		CreateBinTree(&(*T)->lchild);
 		CreateBinTree(&(*T)->rchild);
 	}
@@ -301,39 +304,38 @@ SearchTree::~SearchTree() {
 	root = NULL;
 }
 
-bool SearchTree::SearchBST(BTreeNode *T, Type key, BTreeNode *pre,
-		BTreeNode **n) {
-	if (!T) {
-		*n = pre;
-		return false;
-	}
-	if (T->data == key) {
-		*n = T;
-		return true;
-	} else if (T->data > key)
-		SearchBST(T->lchild, key, T, n);
-	else
-		SearchBST(T->rchild, key, T, n);
-	return false;
+BTreeNode * SearchTree::SearchBST(Type key){
+	return SearchBST(root,key);
 }
 
-bool SearchTree::InsertBST(Type key) {
-	BTreeNode *p;
-	if (!SearchBST(root, key, NULL, &p)) {
-		BTreeNode *temp = new BTreeNode;
-		temp->data = key;
-		temp->lchild = temp->rchild = NULL;
-		if (!p)
-			root = temp;
-		else {
-			if (p->data > key)
-				p->lchild = temp;
-			else
-				p->rchild = temp;
-		}
-		return true;
-	} else
-		return false;
+BTreeNode * SearchTree::SearchBST(BTreeNode *T, Type key) {
+	if (!T)
+		return NULL;
+	if (T->data == key) {
+		return T;
+	} else if (T->data > key)
+		return SearchBST(T->lchild, key);
+	else
+		return SearchBST(T->rchild, key);
+}
+
+//bool SearchTree::InsertBST(Type key) {
+bool SearchTree::Insert(Type key) {
+	return InsertBST(root,key) == NULL ? false:true;
+}
+
+BTreeNode * SearchTree::InsertBST(BTreeNode *T,Type key) {
+	if (NULL == T)
+		return T = new BTreeNode(key);
+	else {
+		if (key == T->data)
+			return T;
+		else if (key < T->data)
+			T->lchild = InsertBST(T->lchild, key);
+		else
+			T->rchild = InsertBST(T->rchild, key);
+		return T;
+	}
 }
 
 /*
@@ -393,8 +395,8 @@ void SearchTree::DestroyBinTree(BTreeNode *T) {
 		T->rchild = NULL;
 	}
 }
-AVLTree::AVLTree() {
-	root = NULL;
+AVLTree::AVLTree(AVLNode* T) {
+	root = T;
 }
 AVLTree::~AVLTree() {
 }
@@ -420,12 +422,12 @@ AVLNode *AVLTree::InsertAVL(AVLNode *T, Type key) {
 	}
 	if (2 == GetHeight(T->lchild) - GetHeight(T->rchild)) {
 		if (key < T->lchild->data)
-			T = R_Rotate(T);
+			T = L_Rotate(T);
 		else
 			T = LR_Rotate(T);
 	} else if (-2 == GetHeight(T->lchild) - GetHeight(T->rchild)) {
 		if (key > T->rchild->data)
-			T = L_Rotate(T);
+			T = R_Rotate(T);
 		else
 			T = RL_Rotate(T);
 	}
@@ -433,8 +435,25 @@ AVLNode *AVLTree::InsertAVL(AVLNode *T, Type key) {
 	return T;
 }
 
-void AVLTree::InsertAVL(Type key) {
+//void AVLTree::InsertAVL(Type key) {
+void AVLTree::Insert(Type key) {
 	root = InsertAVL(root, key);
+}
+
+AVLNode* AVLTree::SearchAVL(Type key){
+	 return SearchAVL(root,key);
+}
+
+AVLNode* AVLTree::SearchAVL(AVLNode *T,Type key){
+	if (!T)
+		return NULL;
+
+	if (T->data == key) {
+		return T;
+	} else if (T->data > key)
+		return SearchAVL(T->lchild, key);
+	else
+		return SearchAVL(T->rchild, key);
 }
 /*********************************************
  *参数：待删除元素,当前节点
@@ -446,14 +465,15 @@ AVLNode *AVLTree::NodeDeleteAVL(AVLNode *T, Type key, bool &isDelSucceed) {
 		return NULL;
 	else {
 		if (key == T->data) {
+			AVLNode *cur;
 			if (NULL == T->rchild) {
-				AVLNode *cur = T;
+				cur = T;
 				T = T->lchild;
 				delete cur;
 				isDelSucceed = true;
 				return T;
 			} else	{ //找到右子树最小的元素代替，然后删除
-				AVLNode *cur = T->rchild;
+				cur = T->rchild;
 				while (cur->lchild != NULL)
 					cur = cur->lchild;
 				T->data = cur->data;
@@ -466,12 +486,12 @@ AVLNode *AVLTree::NodeDeleteAVL(AVLNode *T, Type key, bool &isDelSucceed) {
 
 		if (-2 == GetHeight(T->lchild) - GetHeight(T->rchild)) {	//删除的是左子树上的
 			if (GetHeight(T->rchild->rchild) >= GetHeight(T->rchild->lchild))
-				T = L_Rotate(T);
+				T = R_Rotate(T);
 			else
 				T = RL_Rotate(T);
 		} else if (2 == GetHeight(T->lchild) - GetHeight(T->rchild)) {
 			if (GetHeight(T->lchild->lchild) >= GetHeight(T->lchild->rchild))
-				T = R_Rotate(T);
+				T = L_Rotate(T);
 			else
 				T = LR_Rotate(T);
 		}
@@ -500,12 +520,29 @@ AVLNode *AVLTree::SearchNode(AVLNode *T, Type key) {
 	return SearchNode(T->rchild, key);
 }
 
+/***********************************************
+ * 参数：节点，访问方法
+ * 返回值：void
+ * 功能：中序遍历AVL平衡树
+ */
+void AVLTree::InorderReverse(VIST vist){
+	InorderReverse(root,vist);
+	cout << endl;
+}
+
+void AVLTree::InorderReverse(AVLNode *T,VIST vist){
+	if(T){
+		InorderReverse(T->lchild,vist);
+		vist(T->data);
+		InorderReverse(T->rchild,vist);
+	}
+}
 /*********************************************
  *参数：当前节点
  *返回值：当前子树根节点
  *功能：左旋调平衡
  **********************************************/
-AVLNode *AVLTree::L_Rotate(AVLNode *T) {
+AVLNode *AVLTree::R_Rotate(AVLNode *T) {
 	AVLNode *lChildNode = T->rchild->lchild, *newRoot = T->rchild;
 	T->rchild->lchild = T;
 	T->rchild = lChildNode;
@@ -513,8 +550,7 @@ AVLNode *AVLTree::L_Rotate(AVLNode *T) {
 //	if (NULL != T->rchild)
 //		T->rchild->hight = max(GetHeight(T->rchild->lchild),
 //				GetHeight(T->rchild->rchild)) + 1;
-	newRoot->hight = max(GetHeight(newRoot->lchild), GetHeight(newRoot->rchild))
-			+ 1;
+//	newRoot->hight = max(GetHeight(newRoot->lchild), GetHeight(newRoot->rchild)) + 1;
 	return newRoot;
 }
 
@@ -523,7 +559,7 @@ AVLNode *AVLTree::L_Rotate(AVLNode *T) {
  *返回值：当前子树根节点
  *功能：右旋调平衡
  **********************************************/
-AVLNode *AVLTree::R_Rotate(AVLNode *T) {
+AVLNode *AVLTree::L_Rotate(AVLNode *T) {
 	AVLNode *rChildNode = T->lchild->rchild, *newRoot = T->lchild;
 	T->lchild->rchild = T;
 	T->lchild = rChildNode;
@@ -531,8 +567,7 @@ AVLNode *AVLTree::R_Rotate(AVLNode *T) {
 //	if (NULL != T->lchild)
 //		T->lchild->hight = max(GetHeight(T->lchild->lchild),
 //				GetHeight(T->lchild->rchild)) + 1;
-	newRoot->hight = max(GetHeight(newRoot->lchild), GetHeight(newRoot->rchild))
-			+ 1;
+//	newRoot->hight = max(GetHeight(newRoot->lchild), GetHeight(newRoot->rchild)) + 1;
 	return newRoot;
 }
 
@@ -541,8 +576,8 @@ AVLNode *AVLTree::R_Rotate(AVLNode *T) {
  *返回值：当前子树根节点
  *功能：先左旋后右旋调平衡
  **********************************************/
-AVLNode *AVLTree::LR_Rotate(AVLNode *T) {
-	T->lchild = L_Rotate(T->lchild);
+AVLNode *AVLTree::RL_Rotate(AVLNode *T) {
+	T->rchild = L_Rotate(T->rchild);
 	return R_Rotate(T);
 }
 
@@ -551,7 +586,7 @@ AVLNode *AVLTree::LR_Rotate(AVLNode *T) {
  *返回值：当前子树根节点
  *功能：先右旋后左旋调平衡
  **********************************************/
-AVLNode *AVLTree::RL_Rotate(AVLNode *T) {
-	T->rchild = R_Rotate(T->rchild);
+AVLNode *AVLTree::LR_Rotate(AVLNode *T) {
+	T->lchild = R_Rotate(T->lchild);
 	return L_Rotate(T);
 }

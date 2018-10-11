@@ -5,15 +5,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/BTree.cpp \
-../src/Data_Structure.cpp 
+../src/Data_Structure.cpp \
+../src/data.cpp 
 
 OBJS += \
 ./src/BTree.o \
-./src/Data_Structure.o 
+./src/Data_Structure.o \
+./src/data.o 
 
 CPP_DEPS += \
 ./src/BTree.d \
-./src/Data_Structure.d 
+./src/Data_Structure.d \
+./src/data.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
