@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <iostream>
 
 using namespace std;
@@ -100,7 +101,7 @@ public:
 	~SearchTree();
 	BTreeNode * SearchBST(Type);
 //	bool InsertBST(Type);
-	bool Insert(Type);
+	void Insert(Type);
 	bool DeleteBST(BTreeNode **,Type);
 	void DestroyBinTree(BTreeNode *);
 	void InorderReverse(BTreeNode *T,VIST vist);
@@ -133,5 +134,6 @@ public:
 
 bool display(Type);
 bool display1(Type);
+int time_display();
 
 #endif /* BTREE_H_ */

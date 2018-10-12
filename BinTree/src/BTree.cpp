@@ -64,7 +64,8 @@ BTreeNode * BTree::getLchild(BTreeNode *T, Type data) //获得一个节点的左
 			p_rchild = getLchild(T->rchild, data);
 			if (p_rchild != NULL) //右子树找到
 				return p_rchild;
-			else //右子树未找到
+			else
+				//右子树未找到
 				return NULL;
 		}
 	}
@@ -124,7 +125,7 @@ BiThrTree::BiThrTree() {
 	head = pre = NULL;
 }
 BiThrTree::~BiThrTree() {
-	DestroyBinTree(head,head->rchild);
+	DestroyBinTree(head, head->rchild);
 	delete head;
 	head = NULL;
 	root = NULL;
@@ -146,7 +147,7 @@ void BiThrTree::createBinTree(BiThrNode **T) {
 	}
 }
 
-void BiThrTree::DestroyBinTree(BiThrNode *H,BiThrNode *T) {
+void BiThrTree::DestroyBinTree(BiThrNode *H, BiThrNode *T) {
 //按线索化序列反序方式删除
 //	if(T != H){
 //		if(T->LTag == Link){
@@ -187,7 +188,8 @@ BiThrNode * BiThrTree::getLchild(BiThrNode *T, Type data) //获得一个节点�
 			p_rchild = getLchild(T->rchild, data);
 			if (p_rchild != NULL) //右子树找到
 				return p_rchild;
-			else //右子树未找到
+			else
+				//右子树未找到
 				return NULL;
 		}
 	}
@@ -304,8 +306,8 @@ SearchTree::~SearchTree() {
 	root = NULL;
 }
 
-BTreeNode * SearchTree::SearchBST(Type key){
-	return SearchBST(root,key);
+BTreeNode * SearchTree::SearchBST(Type key) {
+	return SearchBST(root, key);
 }
 
 BTreeNode * SearchTree::SearchBST(BTreeNode *T, Type key) {
@@ -320,11 +322,11 @@ BTreeNode * SearchTree::SearchBST(BTreeNode *T, Type key) {
 }
 
 //bool SearchTree::InsertBST(Type key) {
-bool SearchTree::Insert(Type key) {
-	return InsertBST(root,key) == NULL ? false:true;
+void SearchTree::Insert(Type key) {
+	root = InsertBST(root, key);
 }
 
-BTreeNode * SearchTree::InsertBST(BTreeNode *T,Type key) {
+BTreeNode * SearchTree::InsertBST(BTreeNode *T, Type key) {
 	if (NULL == T)
 		return T = new BTreeNode(key);
 	else {
@@ -440,11 +442,11 @@ void AVLTree::Insert(Type key) {
 	root = InsertAVL(root, key);
 }
 
-AVLNode* AVLTree::SearchAVL(Type key){
-	 return SearchAVL(root,key);
+AVLNode* AVLTree::SearchAVL(Type key) {
+	return SearchAVL(root, key);
 }
 
-AVLNode* AVLTree::SearchAVL(AVLNode *T,Type key){
+AVLNode* AVLTree::SearchAVL(AVLNode *T, Type key) {
 	if (!T)
 		return NULL;
 
@@ -472,7 +474,7 @@ AVLNode *AVLTree::NodeDeleteAVL(AVLNode *T, Type key, bool &isDelSucceed) {
 				delete cur;
 				isDelSucceed = true;
 				return T;
-			} else	{ //找到右子树最小的元素代替，然后删除
+			} else { //找到右子树最小的元素代替，然后删除
 				cur = T->rchild;
 				while (cur->lchild != NULL)
 					cur = cur->lchild;
@@ -525,16 +527,16 @@ AVLNode *AVLTree::SearchNode(AVLNode *T, Type key) {
  * 返回值：void
  * 功能：中序遍历AVL平衡树
  */
-void AVLTree::InorderReverse(VIST vist){
-	InorderReverse(root,vist);
+void AVLTree::InorderReverse(VIST vist) {
+	InorderReverse(root, vist);
 	cout << endl;
 }
 
-void AVLTree::InorderReverse(AVLNode *T,VIST vist){
-	if(T){
-		InorderReverse(T->lchild,vist);
+void AVLTree::InorderReverse(AVLNode *T, VIST vist) {
+	if (T) {
+		InorderReverse(T->lchild, vist);
 		vist(T->data);
-		InorderReverse(T->rchild,vist);
+		InorderReverse(T->rchild, vist);
 	}
 }
 /*********************************************
@@ -589,4 +591,14 @@ AVLNode *AVLTree::RL_Rotate(AVLNode *T) {
 AVLNode *AVLTree::LR_Rotate(AVLNode *T) {
 	T->lchild = R_Rotate(T->lchild);
 	return L_Rotate(T);
+}
+
+int time_display() {
+	time_t t;
+	struct tm *timeinfo;
+	time(&t);
+	timeinfo = localtime(&t);
+	printf("%4d-%2d-%2d %2d:%2d:%2d\n",1900+timeinfo->tm_year,1+timeinfo->tm_mon,\
+			timeinfo->tm_mday,timeinfo->tm_hour,timeinfo->tm_min,timeinfo->tm_sec);
+	return t;
 }

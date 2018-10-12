@@ -60,30 +60,50 @@ int main()
 
 #endif
 
-#if 0
+#if 1
 	int value;
+	long int time;
 	SearchTree searchtree;
+	BTreeNode *btreenode;
 	data_create("data",50000);
+	time = time_display();
 	data_read("data",searchtree);
+	printf("insert time cast %d \n",time_display()-time);
 	searchtree.InorderReverse(searchtree.root,display1);
+	printf("insert time cast %d \n",time_display()-time);
 	cout<<"查找数据："<<endl;
 	cin>>value;
-	searchtree.SearchBST(value);
+	time = time_display();
+	btreenode = searchtree.SearchBST(value);
+	if(NULL != btreenode)
+		cout<<"value = "<<value<<endl;
+	else
+		cout<<"no found!"<<endl;
+	printf("search time cast %d \n",time_display()-time);
 	return 0;
 #endif
 
-#if 1
+#if 0
 	int value;
+	long int time;
 	AVLTree avltree;
 	AVLNode* avlnode;
 	data_create("data",50000);
+	time = time_display();
 	data_read("data",avltree);
+	printf("insert time cast %d \n",time_display()-time);
 	avltree.InorderReverse(display1);
+	printf("insert time cast %d \n",time_display()-time);
 	cout<<"查找数据："<<endl;
 	cin>>value;
+	time = time_display();
 	avlnode = avltree.SearchAVL(value);
 	if(NULL != avlnode)
 		cout<<"value = "<<value<<endl;
+	else
+		cout<<"no found!"<<endl;
+	printf("search time cast %d \n",time_display()-time);
+	return 0;
 #endif
 }
 
