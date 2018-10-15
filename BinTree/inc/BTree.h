@@ -19,6 +19,13 @@ typedef int Type;
 typedef enum {Link,Thread} PointerTag;
 typedef bool VIST(Type data);
 
+//class Time{
+//private :
+//	long int time_value;
+//public:
+//	Time();
+//	~Time();
+//}
 //二叉树节点
 typedef struct BTreeNode
 {
@@ -93,18 +100,15 @@ class SearchTree
 {
 public:
 	BTreeNode *root;
-private:
-	BTreeNode * InsertBST(BTreeNode*,Type);
-	BTreeNode * SearchBST(BTreeNode *,Type);
 public:
-	SearchTree();
+	SearchTree(BTreeNode *T=NULL);
 	~SearchTree();
-	BTreeNode * SearchBST(Type);
-//	bool InsertBST(Type);
-	void Insert(Type);
+	bool SearchBST(BTreeNode *, Type, BTreeNode *,BTreeNode **);
+	bool Insert(Type);
 	bool DeleteBST(BTreeNode **,Type);
 	void DestroyBinTree(BTreeNode *);
 	void InorderReverse(BTreeNode *T,VIST vist);
+	int BSTreeNodeInsertR(BTreeNode **,Type);
 };
 //AVL平衡树
 class AVLTree
@@ -134,6 +138,6 @@ public:
 
 bool display(Type);
 bool display1(Type);
-int time_display();
+time_t time_display();
 
 #endif /* BTREE_H_ */

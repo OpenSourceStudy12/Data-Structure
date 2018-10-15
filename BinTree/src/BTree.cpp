@@ -298,46 +298,63 @@ void BiThrTree::InThreading(BiThrNode *T) {
 	}
 }
 
-SearchTree::SearchTree() {
-	root = NULL;
+SearchTree::SearchTree(BTreeNode *T) {
+	root = T;
 }
 SearchTree::~SearchTree() {
 	DestroyBinTree(root);
 	root = NULL;
 }
 
-BTreeNode * SearchTree::SearchBST(Type key) {
-	return SearchBST(root, key);
-}
-
-BTreeNode * SearchTree::SearchBST(BTreeNode *T, Type key) {
-	if (!T)
-		return NULL;
-	if (T->data == key) {
-		return T;
-	} else if (T->data > key)
-		return SearchBST(T->lchild, key);
-	else
-		return SearchBST(T->rchild, key);
-}
-
-//bool SearchTree::InsertBST(Type key) {
-void SearchTree::Insert(Type key) {
-	root = InsertBST(root, key);
-}
-
-BTreeNode * SearchTree::InsertBST(BTreeNode *T, Type key) {
-	if (NULL == T)
-		return T = new BTreeNode(key);
-	else {
-		if (key == T->data)
-			return T;
-		else if (key < T->data)
-			T->lchild = InsertBST(T->lchild, key);
-		else
-			T->rchild = InsertBST(T->rchild, key);
-		return T;
+bool SearchTree::SearchBST(BTreeNode *T, Type key, BTreeNode *pre,
+		BTreeNode **n) {
+	if (!T) {
+		*n = pre;
+		return false;
 	}
+	if (T->data == key) {
+		*n = T;
+		return true;
+	} else if (T->data > key)
+		return SearchBST(T->lchild, key, T, n);
+	else
+		return SearchBST(T->rchild, key, T, n);
+}
+
+bool SearchTree::Insert(Type key) {
+//	BTreeNode *p;
+//	if (!SearchBST(root, key, NULL, &p)) {
+//		BTreeNode *temp = new BTreeNode(key);
+//		if (!p)
+//			root = temp;
+//		else {
+//			if (p->data > key)
+//				p->lchild = temp;
+//			else
+//				p->rchild = temp;
+//		}
+//		return true;
+//	} else
+//		return false;
+	return !BSTreeNodeInsertR(&root,key)?true:false;
+}
+int SearchTree::BSTreeNodeInsertR(BTreeNode **tree,Type key) //搜索树的插入
+{
+    if(*tree == NULL)
+    {
+        //*tree = new BTreeNode(key);
+    	*tree = (BTreeNode*)malloc(sizeof(BTreeNode));
+    	(*tree)->data = key;
+    	(*tree)->lchild = (*tree)->rchild = NULL;
+        return 0;
+    }
+
+    if ((*tree)->data > key)
+        return BSTreeNodeInsertR(&(*tree)->lchild,key);
+    else if ((*tree)->data < key)
+        return BSTreeNodeInsertR(&(*tree)->rchild,key);
+    else
+        return -1;
 }
 
 /*
@@ -436,7 +453,6 @@ AVLNode *AVLTree::InsertAVL(AVLNode *T, Type key) {
 	T->hight = max(GetHeight(T->lchild), GetHeight(T->rchild)) + 1;
 	return T;
 }
-
 //void AVLTree::InsertAVL(Type key) {
 void AVLTree::Insert(Type key) {
 	root = InsertAVL(root, key);
@@ -593,7 +609,7 @@ AVLNode *AVLTree::LR_Rotate(AVLNode *T) {
 	return L_Rotate(T);
 }
 
-int time_display() {
+time_t time_display() {
 	time_t t;
 	struct tm *timeinfo;
 	time(&t);

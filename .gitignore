@@ -31,4 +31,6 @@
 *.out
 *.app
 
-BinTree/Debug
+BinTree/Debug/*/*
+BinTree/Debug/*
+#BinTree/Debug/*/

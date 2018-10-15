@@ -6,10 +6,11 @@
  */
 #include "BTree.h"
 #include "data.h"
+#include <sys/time.h>
 
 int main()
 {
-	Type data = '/';
+	//Type data = '/';
 #if 0
 
   	BTree btree;
@@ -62,47 +63,53 @@ int main()
 
 #if 1
 	int value;
-	long int time;
+	struct timeval timeval1,timeval2;
 	SearchTree searchtree;
 	BTreeNode *btreenode;
-	data_create("data",50000);
-	time = time_display();
+	data_create("data",500000);
+	gettimeofday(&timeval1,NULL);
 	data_read("data",searchtree);
-	printf("insert time cast %d \n",time_display()-time);
-	searchtree.InorderReverse(searchtree.root,display1);
-	printf("insert time cast %d \n",time_display()-time);
+	gettimeofday(&timeval2,NULL);
+	printf("insert time cast %f \n",(timeval2.tv_sec-timeval1.tv_sec)\
+			+(timeval2.tv_usec-timeval1.tv_usec)/1000.0/1000.0);
 	cout<<"查找数据："<<endl;
 	cin>>value;
-	time = time_display();
-	btreenode = searchtree.SearchBST(value);
+	gettimeofday(&timeval1,NULL);
+	searchtree.SearchBST(searchtree.root,value,NULL,&btreenode);
 	if(NULL != btreenode)
-		cout<<"value = "<<value<<endl;
+		cout<<"value = "<<btreenode->data<<endl;
 	else
 		cout<<"no found!"<<endl;
-	printf("search time cast %d \n",time_display()-time);
+	gettimeofday(&timeval2,NULL);
+	printf("search time cast %f \n",(timeval2.tv_sec-timeval1.tv_sec)\
+			+(timeval2.tv_usec-timeval1.tv_usec)/1000.0/1000.0);
 	return 0;
 #endif
 
 #if 0
 	int value;
-	long int time;
+	struct timeval timeval1,timeval2;
 	AVLTree avltree;
 	AVLNode* avlnode;
-	data_create("data",50000);
-	time = time_display();
+	data_create("data",400000);
+	gettimeofday(&timeval1,NULL);
 	data_read("data",avltree);
-	printf("insert time cast %d \n",time_display()-time);
-	avltree.InorderReverse(display1);
-	printf("insert time cast %d \n",time_display()-time);
+	gettimeofday(&timeval2,NULL);
+	printf("search time cast %f \n",(timeval2.tv_sec-timeval1.tv_sec)\
+			+(timeval2.tv_usec-timeval1.tv_usec)/1000.0/1000.0);
+	//avltree.InorderReverse(display1);
 	cout<<"查找数据："<<endl;
 	cin>>value;
-	time = time_display();
+	gettimeofday(&timeval1,NULL);
 	avlnode = avltree.SearchAVL(value);
+	gettimeofday(&timeval2,NULL);
 	if(NULL != avlnode)
-		cout<<"value = "<<value<<endl;
+		cout<<"value = "<<avlnode->data<<endl;
 	else
 		cout<<"no found!"<<endl;
-	printf("search time cast %d \n",time_display()-time);
+	printf("search time cast %f \n",(timeval2.tv_sec-timeval1.tv_sec)\
+			+(timeval2.tv_usec-timeval1.tv_usec)/1000.0/1000.0);
+	printf("num = %d\n",avltree.num);
 	return 0;
 #endif
 }

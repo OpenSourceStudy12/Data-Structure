@@ -32,14 +32,14 @@ int data_read(const char *filename,type &tree){
 	return 0;
 }
 
-int data_create(const char *filename,long int num){
+int data_create(const char *filename,int num){
 	int value,ret;
 	vector<int>vet;
 	vector<int>::iterator it;
 	FILE *fp;
-	//srand(time(0));
+//	srand(time(0));
 //	for(;num;){
-//		value = rand()%65536;
+//		value = rand()%(2^32);
 //		for(it = vet.begin();it != vet.end();it++){
 //			if(*it == value)
 //				break;
