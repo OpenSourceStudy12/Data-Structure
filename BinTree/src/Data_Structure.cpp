@@ -66,7 +66,7 @@ int main()
 	struct timeval timeval1,timeval2;
 	SearchTree searchtree;
 	BTreeNode *btreenode;
-	data_create("data",500000);
+	data_create("data",100000);
 	gettimeofday(&timeval1,NULL);
 	data_read("data",searchtree);
 	gettimeofday(&timeval2,NULL);
